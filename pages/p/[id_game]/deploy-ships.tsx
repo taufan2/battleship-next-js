@@ -67,6 +67,10 @@ class DeployShips extends Component<IDeployShipsProps, IDeployShipsStates> {
     onSubmitCreateGame = async () => {
         if (!this.props.router.query?.id_game) return false;
 
+        await this.setState({
+            creatingGame: true,
+        })
+
         const player = this.props.game.detail_players.find(value => value.temp_id === this.props.playerId);
         if (!player) throw new Error("Player Not Exists");
 
@@ -97,7 +101,7 @@ class DeployShips extends Component<IDeployShipsProps, IDeployShipsStates> {
             coords: [],
         });
 
-        if (data.detail_players.length === 1) {
+        if (data.detail_players.length === 2) {
             data.game_status = "PLAYING"
         }
 

@@ -133,10 +133,13 @@ class Index extends Component<IProps, IStates> {
             return "Menunggu lawan masuk";
         }
 
-        if (game.game_status === "PLAYING") {
+        if (game.game_status === "WAITING_PLAYER") {
             if (enemyState?.state.code === "DEPLOYING_SHIP") {
                 return "Menunggu lawan menempatkan kapalnya";
             }
+        }
+
+        if (game.game_status === "PLAYING") {
 
             if (enemyState?.state.code === "READY" && myState?.state.code === "READY") {
                 if (this.isMyTurn()) return "Giliran Anda menyerang";
