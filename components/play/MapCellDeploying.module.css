@@ -1,0 +1,24 @@
+.mapCell {
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    place-content: center;
+}
+
+
+.mapCell:hover {
+    cursor: pointer;
+    box-shadow: inset 0 0 10px #A0AEC0;
+}
+
+.cellNormal {
+    background: #FFF;
+    border: 1.5px solid #E2E8F0;
+}
+
+
+.cellHasShip {
+    background: #FFF;
+    border: 1.5px solid #48BB78;
+    color: #48BB78;
+}

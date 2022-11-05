@@ -1,30 +1,33 @@
 import React, {Component} from 'react';
-import {Box, Button, Center, Container, Text,} from "@chakra-ui/react";
-import MainLayout from "../components/MainLayout/MainLayout";
-import MapDeployingShips from "../components/deployShips/MapDeployingShips";
-import GameDocument from "../config/firebase/GameDocument/GameDocument";
-import {addDoc, collection} from "@firebase/firestore";
-import {myFirestore} from "../config/firebase/firebase";
+import {Box, Button, Center, Container, Text} from "@chakra-ui/react";
+import MapDeployingShips from "../../../components/deployShips/MapDeployingShips";
+import MainLayout from "../../../components/MainLayout/MainLayout";
 import {withRouter} from "next/router";
 import {WithRouterProps} from "next/dist/client/with-router";
+import {doc, getDoc, setDoc} from "@firebase/firestore";
+import {myFirestore} from "../../../config/firebase/firebase";
+import GameDocument from "../../../config/firebase/GameDocument/GameDocument";
 import {GetServerSideProps} from "next";
+import {myFirestoreAdmin} from "../../../config/firebase/firebaseAdmin";
+import GameDocumentTypes from "../../../config/firebase/GameDocument/GameDocumentTypes";
 
-interface IndexProps extends WithRouterProps {
+interface IDeployShipsProps extends WithRouterProps {
+    game: GameDocumentTypes & { ref: string };
     playerId: string;
+    playerExists: boolean;
 }
 
-interface IndexStates {
+interface IDeployShipsStates {
     x: number;
     y: number;
     maxShipDeploy: number,
     deployedShips: { x: number; y: number }[];
-
     creatingGame: boolean;
 }
 
-class Index extends Component<IndexProps, IndexStates> {
+class DeployShips extends Component<IDeployShipsProps, IDeployShipsStates> {
 
-    constructor(props: IndexProps) {
+    constructor(props: IDeployShipsProps) {
         super(props);
 
         const row = 8;
@@ -35,7 +38,6 @@ class Index extends Component<IndexProps, IndexStates> {
             y: row,
             maxShipDeploy: 5,
             deployedShips: [],
-
             creatingGame: false,
         }
     }
@@ -63,58 +65,45 @@ class Index extends Component<IndexProps, IndexStates> {
     }
 
     onSubmitCreateGame = async () => {
-        await this.setState({
-            creatingGame: true,
+        if (!this.props.router.query?.id_game) return false;
+
+        const player = this.props.game.detail_players.find(value => value.temp_id === this.props.playerId);
+        if (!player) throw new Error("Player Not Exists");
+
+        const id_game: string = this.props.router.query.id_game as string;
+
+        const docRef = doc(myFirestore, 'games', id_game);
+        const getGameDoc = await getDoc(docRef.withConverter<GameDocument>(GameDocument.converter));
+        const data = getGameDoc.data()!;
+
+        data.ships.push({
+            player: player,
+            ships: this.state.deployedShips.map(value => {
+                return {
+                    x: value.x,
+                    y: value.y,
+                    destroyed: false,
+                    owner: player,
+                }
+            })
         })
 
-        const player = {
-            name: "Player 1",
-            temp_id: this.props.playerId,
-        }
+        let myStates = data.player_states.find(value => value.temp_id === this.props.playerId);
+        if (!myStates) throw new Error("States Not Found!");
+        myStates.state.code = "READY";
 
-        const gameDocument = new GameDocument();
-        gameDocument.ships = [
-            {
-                player,
-                ships: this.state.deployedShips.map(value => ({
-                    y: value.y,
-                    x: value.x,
-                    owner: player,
-                    destroyed: false,
-                }))
-            }
-        ];
-        gameDocument.game_status = "PLAYING";
-        gameDocument.detail_players = [
-            player,
-        ];
-        gameDocument.player_states = [
-            {
-                ...player,
-                state: {
-                    code: "READY",
-                }
-            }
-        ];
-        gameDocument.hit_mark_miss = [
-            {
-                hitter: player,
-                coords: [],
-            }
-        ]
-        gameDocument.which_turn = player;
-        gameDocument.winner = null;
+        data.hit_mark_miss.push({
+            hitter: player,
+            coords: [],
+        });
 
-        const docRef = await addDoc(
-            collection(myFirestore, "games").withConverter(GameDocument.converter),
-            gameDocument
-        );
+        await setDoc(docRef.withConverter<GameDocument>(GameDocument.converter), data);
 
-        this.props.router.push(`/p/${docRef.id}`);
-
+        this.props.router.replace(`/p/${id_game}`)
     }
 
     render() {
+
         return (
             <MainLayout>
                 <Container maxWidth={"container.lg"} padding={'15px'}>
@@ -124,7 +113,8 @@ class Index extends Component<IndexProps, IndexStates> {
 
                     <Container maxWidth={"container.sm"}>
                         <Center>
-                            <MapDeployingShips x={this.state.x} y={this.state.y} deployedShips={this.state.deployedShips}
+                            <MapDeployingShips x={this.state.x} y={this.state.y}
+                                               deployedShips={this.state.deployedShips}
                                                onCellClick={this.onCellClick}/>
                         </Center>
 
@@ -142,10 +132,11 @@ class Index extends Component<IndexProps, IndexStates> {
                                 variant={'solid'}
                                 disabled={this.state.deployedShips.length < 5}
                             >
-                                Buat Game
+                                Mulai Permainan
                             </Button>
                         </Box>
                     </Container>
+
 
                 </Container>
             </MainLayout>
@@ -154,20 +145,33 @@ class Index extends Component<IndexProps, IndexStates> {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, ...ctx}) => {
-    let userCookieId = req.cookies?.["_id"] ?? null ;
+    const idGame = ctx.params?.id_game;
+    if (!idGame) throw new Error("ID GAME NOT FOUND")
+    const docRef = myFirestoreAdmin.collection("games").doc(idGame as string);
+    const get = await docRef.withConverter<GameDocument>(GameDocument.converter).get();
+    if (!get.exists) throw new Error("ID GAME NOT FOUND");
+    const data = get.data()!;
 
+    let userCookieId = req.cookies?.["_id"] ?? null;
     if (!userCookieId) {
-        const fromHeader = res.getHeader("X-USER-ID") ;
+        const fromHeader = res.getHeader("X-USER-ID");
         userCookieId = (!!fromHeader) ? fromHeader as string : null;
-
         res.removeHeader("X-USER-ID");
     }
 
+    const findMe = data.detail_players.find(value => {
+        return value.temp_id === userCookieId;
+    });
+
+    const playerExist: boolean = !!findMe;
+
     return {
         props: {
+            game: data.toJson(true),
             playerId: userCookieId,
+            playerExists: playerExist,
         }
     }
 }
 
-export default withRouter(Index);
+export default withRouter(DeployShips);

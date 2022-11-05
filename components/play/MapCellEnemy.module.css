@@ -1,0 +1,35 @@
+.mapCell {
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    place-content: center;
+}
+
+.enemyCellDisabled {
+    background: #E2E8F0;
+    border: 1.5px solid #E2E8F0;
+    color: #A0AEC0;
+}
+
+.enemyCellDisabled:hover {
+    cursor: not-allowed;
+}
+
+.enemyCellNormal {
+    background: #FFF;
+    border: 1.5px solid #E2E8F0;
+}
+
+.enemyCellNormal:hover {
+    cursor: pointer;
+    box-shadow: inset 0 0 10px #A0AEC0;
+}
+
+.enemyShipDestroyed {
+    border: 1.5px solid #48BB78;
+    color: #48BB78;
+}
+
+.enemyShipDestroyed:hover {
+    cursor: not-allowed;
+}
