@@ -97,6 +97,10 @@ class DeployShips extends Component<IDeployShipsProps, IDeployShipsStates> {
             coords: [],
         });
 
+        if (data.detail_players.length === 1) {
+            data.game_status = "PLAYING"
+        }
+
         await setDoc(docRef.withConverter<GameDocument>(GameDocument.converter), data);
 
         this.props.router.replace(`/p/${id_game}`)

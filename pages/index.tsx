@@ -84,7 +84,7 @@ class Index extends Component<IndexProps, IndexStates> {
                 }))
             }
         ];
-        gameDocument.game_status = "PLAYING";
+        gameDocument.game_status = "WAITING_PLAYER";
         gameDocument.detail_players = [
             player,
         ];

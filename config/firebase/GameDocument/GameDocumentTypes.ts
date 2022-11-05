@@ -26,7 +26,7 @@ interface GameDocument {
 
     which_turn: IPlayer | null;
 
-    game_status: "FINISHED" | "PLAYING";
+    game_status: "FINISHED" | "PLAYING" | "WAITING_PLAYER";
 
     winner: IPlayer | null;
 
