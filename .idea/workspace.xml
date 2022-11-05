@@ -1,39 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="db45499a-a995-4bcd-86cc-b601bc3ae28a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/ConfirmJoinGame.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/MainLayout/Header.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/MainLayout/Header.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/MainLayout/MainLayout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ModalCreateNewGame/ModalCreateNewGame.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/deployShips/MapDeployingShips.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/deployShips/MapDeployingShips.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/play/MapCellDeploying.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/play/MapCellDeploying.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/play/MapCellEnemy.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/play/MapCellEnemy.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/play/MapCellMySelf.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/play/MapCellMySelf.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/play/MapPlayBattle.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/play/MapPlayBattle.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/firebase/GameDocument/GameDocument.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/firebase/GameDocument/GameDocumentTypes.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/firebase/battleship-game-b0add-firebase-adminsdk-4rsj8-7bba52468c.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/firebase/firebase.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/firebase/firebaseAdmin.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/middleware.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/p/[id_game]/deploy-ships.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/p/[id_game]/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/redux/hydrate.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/redux/modalCreateNewGame/modalCreateNewGameSlice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/redux/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Home.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
+    <list default="true" id="db45499a-a995-4bcd-86cc-b601bc3ae28a" name="Changes" comment="My First Commit">
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,8 +85,16 @@
       <workItem from="1667452522893" duration="34685000" />
       <workItem from="1667557890845" duration="56000" />
       <workItem from="1667625897517" duration="13909000" />
-      <workItem from="1667666275263" duration="384000" />
+      <workItem from="1667666275263" duration="692000" />
     </task>
+    <task id="LOCAL-00001" summary="My First Commit">
+      <created>1667666938556</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1667666938556</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,5 +110,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="My First Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="My First Commit" />
   </component>
 </project>
