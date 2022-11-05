@@ -62,17 +62,13 @@ class Index extends Component<IProps, IStates> {
         if ((countEnemyShips === 0 || countMyShips === 0) && this.state.game.game_status === "PLAYING") {
             const enemy = this.state.game.detail_players.find(value => value.temp_id !== this.props.playerId);
             const me = this.state.game.detail_players.find(value => value.temp_id === this.props.playerId);
-
             if (countEnemyShips === 0) this.gameObject.winner = me!;
             if (countMyShips === 0) this.gameObject.winner = enemy!;
-
             this.gameObject.game_status = "FINISHED";
-
             await setDoc(
                 this.gameObject.ref.withConverter<GameDocument>(GameDocument.converter),
                 this.gameObject,
             )
-
             this.unsub();
         }
     }
