@@ -59,7 +59,7 @@ class Index extends Component<IProps, IStates> {
 
         const {enemy: countEnemyShips, mine: countMyShips} = this.shipCount();
 
-        if ((countEnemyShips === 0 || countMyShips === 0) && this.state.game.game_status === "WAITING_PLAYER") {
+        if ((countEnemyShips === 0 || countMyShips === 0) && this.state.game.game_status === "PLAYING") {
             const enemy = this.state.game.detail_players.find(value => value.temp_id !== this.props.playerId);
             const me = this.state.game.detail_players.find(value => value.temp_id === this.props.playerId);
 
